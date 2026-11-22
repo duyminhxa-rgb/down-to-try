@@ -5,6 +5,7 @@ import { t } from "@/lib/i18n";
 import StepActions from "@/components/StepActions";
 import StepChat from "@/components/StepChat";
 import VideoPicker from "@/components/VideoPicker";
+import { findVideos } from "@/lib/youtube";
 
 export const maxDuration = 300;
 
@@ -17,7 +18,7 @@ export default async function StepPage({ params }: { params: Promise<{ id: strin
   const { data: step } = await supabase.from("steps").select("*, skills(id, name)").eq("id", id).single();
   if (!step) notFound();
 
-  const [{ data: videos }, { data: messages }, { data: siblings }, parent] = await Promise.all([
+  const [{ data: foundVideos }, { data: messages }, { data: siblings }, parent] = await Promise.all([
     supabase.from("step_videos").select("*").eq("step_id", id).order("is_primary", { ascending: false }),
     supabase.from("chat_messages").select("id, role, content").eq("step_id", id).order("created_at"),
     supabase
@@ -30,6 +31,19 @@ export default async function StepPage({ params }: { params: Promise<{ id: strin
       ? supabase.from("steps").select("title").eq("id", step.parent_step_id).single()
       : Promise.resolve({ data: null }),
   ]);
+
+  // Backfill videos for steps that were created without any (e.g. YouTube was down).
+  let videos = foundVideos;
+  if (!videos?.length && step.youtube_query) {
+    const fresh = await findVideos(step.youtube_query, undefined, "en");
+    if (fresh.length) {
+      const { data } = await supabase
+        .from("step_videos")
+        .insert(fresh.map((v, j) => ({ ...v, step_id: step.id, is_primary: j === 0 })))
+        .select("*");
+      videos = data ?? [];
+    }
+  }
 
   const idx = siblings?.findIndex((s) => s.id === id) ?? -1;
   const next = idx >= 0 ? siblings?.[idx + 1] : undefined;
