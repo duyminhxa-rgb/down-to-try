@@ -1,35 +1,49 @@
-@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap");
 @import "tailwindcss";
 
 @theme inline {
   --color-brand: #ff5a36;
   --color-brand-dark: #e0431f;
-  --color-ink: #1d1b2e;
-  --color-cream: #fff8f0;
-  --color-mint: #19b38a;
-  --font-sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --color-brand-soft: #ffe1d6;
+  --color-ink: #17152a;
+  --color-ink-2: #2a2742;
+  --color-cream: #fbf6ef;
+  --color-line: #ece4d8;
+  --color-mint: #12a37f;
+  --font-sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
 }
 
 body {
   background: var(--color-cream);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: 17px;
   -webkit-tap-highlight-color: transparent;
 }
 
+.dot-grid {
+  background-image: radial-gradient(rgba(23, 21, 42, 0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
 @utility btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 font-semibold transition active:scale-[0.98] disabled:opacity-50 bg-brand text-white hover:bg-brand-dark;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold transition active:translate-y-px disabled:opacity-50 bg-brand text-white shadow-[0_3px_0_#c63a18] hover:bg-brand-dark;
+}
+@utility btn-dark {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold transition active:translate-y-px disabled:opacity-50 bg-ink text-white shadow-[0_3px_0_#000] hover:bg-ink-2;
 }
 @utility btn-ghost {
-  @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 font-semibold transition active:scale-[0.98] disabled:opacity-50 bg-white text-ink ring-1 ring-black/10 hover:bg-black/5;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold transition active:translate-y-px disabled:opacity-50 bg-white text-ink border border-line hover:bg-cream;
 }
 @utility btn-mint {
-  @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 font-semibold transition active:scale-[0.98] disabled:opacity-50 bg-mint text-white hover:brightness-95;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold transition active:translate-y-px disabled:opacity-50 bg-mint text-white shadow-[0_3px_0_#0b7a5e] hover:brightness-95;
 }
 @utility card {
-  @apply rounded-3xl bg-white p-5 shadow-sm ring-1 ring-black/5;
+  @apply rounded-2xl bg-white p-5 border border-line;
 }
 @utility input {
-  @apply w-full rounded-2xl border-0 bg-white px-4 py-3 text-lg ring-1 ring-black/15 outline-none focus:ring-2 focus:ring-brand;
+  @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-lg outline-none transition focus:border-ink focus:ring-4 focus:ring-ink/5;
+}
+@utility eyebrow {
+  @apply text-xs font-bold uppercase tracking-[0.14em] text-ink/50;
 }

@@ -50,7 +50,7 @@ const stepSchema = {
     why_it_matters: { type: "string" },
     practice: { type: "string", description: "Concrete, measurable practice exercise" },
     done_looks_like: { type: "string", description: "Self-checkable finish line" },
-    common_mistakes: { type: "array", items: { type: "string" }, maxItems: 4 },
+    common_mistakes: { type: "array", items: { type: "string" }, description: "2-4 items" },
     youtube_query_en: {
       type: "string",
       description: "English YouTube search query for a short beginner tutorial on exactly this step",
@@ -70,6 +70,7 @@ const stepSchema = {
     "youtube_query_en",
     "youtube_query_vi",
   ],
+  additionalProperties: false,
 } as const;
 
 export type GeneratedStep = {
@@ -89,10 +90,13 @@ export type Roadmap = {
   levels: { name: string; steps: GeneratedStep[] }[];
 };
 
-function toolInput<T>(msg: Anthropic.Message): T {
-  const block = msg.content.find((b) => b.type === "tool_use");
-  if (!block || block.type !== "tool_use") throw new Error("AI did not return a plan. Try again.");
-  return block.input as T;
+function jsonOutput<T>(msg: Anthropic.Message): T {
+  const text = msg.content
+    .map((b) => (b.type === "text" ? b.text : ""))
+    .join("")
+    .trim();
+  if (!text) throw new Error("AI did not return a plan. Try again.");
+  return JSON.parse(text) as T;
 }
 
 export async function generateRoadmap(opts: {
@@ -105,34 +109,34 @@ export async function generateRoadmap(opts: {
     model: CLAUDE_MODEL,
     max_tokens: 12000,
     system: `${TEACHING_RULES}\n\nLanguage: ${languageInstruction(opts.lang)} (YouTube queries stay in their own languages.)`,
-    tools: [
-      {
-        name: "save_roadmap",
-        description: "Save the learning roadmap",
-        input_schema: {
+    output_config: {
+      effort: "medium",
+      format: {
+        type: "json_schema",
+        schema: {
           type: "object",
           properties: {
             skill_name: { type: "string", description: "Clean display name of the skill" },
             summary: { type: "string", description: "2 sentences: what they'll be able to do at the end" },
             levels: {
               type: "array",
-              minItems: 2,
-              maxItems: 3,
+              description: "2-3 levels",
               items: {
                 type: "object",
                 properties: {
                   name: { type: "string", description: "e.g. 'Level 1 — First sounds'" },
-                  steps: { type: "array", minItems: 3, maxItems: 5, items: stepSchema },
+                  steps: { type: "array", description: "3-5 steps", items: stepSchema },
                 },
                 required: ["name", "steps"],
+                additionalProperties: false,
               },
             },
           },
           required: ["skill_name", "summary", "levels"],
+          additionalProperties: false,
         },
       },
-    ],
-    tool_choice: { type: "tool", name: "save_roadmap" },
+    },
     messages: [
       {
         role: "user",
@@ -144,7 +148,7 @@ Keep it to at most 14 steps total, in the right learning order. The first step m
       },
     ],
   });
-  return { roadmap: toolInput<Roadmap>(msg), usage: msg.usage };
+  return { roadmap: jsonOutput<Roadmap>(msg), usage: msg.usage };
 }
 
 export async function splitStep(opts: {
@@ -157,18 +161,18 @@ export async function splitStep(opts: {
     model: CLAUDE_MODEL,
     max_tokens: 5000,
     system: `${TEACHING_RULES}\n\nLanguage: ${languageInstruction(opts.lang)}`,
-    tools: [
-      {
-        name: "save_substeps",
-        description: "Save smaller sub-steps",
-        input_schema: {
+    output_config: {
+      effort: "medium",
+      format: {
+        type: "json_schema",
+        schema: {
           type: "object",
-          properties: { steps: { type: "array", minItems: 2, maxItems: 4, items: stepSchema } },
+          properties: { steps: { type: "array", description: "2-4 smaller steps", items: stepSchema } },
           required: ["steps"],
+          additionalProperties: false,
         },
       },
-    ],
-    tool_choice: { type: "tool", name: "save_substeps" },
+    },
     messages: [
       {
         role: "user",
@@ -180,5 +184,5 @@ ${opts.note ? `What the learner says is hard: ${opts.note}` : ""}`,
       },
     ],
   });
-  return { steps: toolInput<{ steps: GeneratedStep[] }>(msg).steps, usage: msg.usage };
+  return { steps: jsonOutput<{ steps: GeneratedStep[] }>(msg).steps, usage: msg.usage };
 }
