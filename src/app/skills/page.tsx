@@ -9,7 +9,7 @@ export default async function SkillsPage() {
   const en = profile.language === "en";
   const { data } = await supabase
     .from("skills")
-    .select("id, name, summary, created_at, steps(status)")
+    .select("id, name, summary, cover_url, created_at, steps(status)")
     .order("created_at", { ascending: false });
   const list = (data ?? []) as SkillSummary[];
 

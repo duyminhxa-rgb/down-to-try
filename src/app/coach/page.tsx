@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getUserAndProfile } from "@/lib/supabase/server";
 import LiveCoach from "@/components/LiveCoach";
+import { titleCase } from "@/lib/text";
 
 export default async function CoachPage({ searchParams }: { searchParams: Promise<{ step?: string }> }) {
   const { step: stepId } = await searchParams;
@@ -11,7 +12,7 @@ export default async function CoachPage({ searchParams }: { searchParams: Promis
   let title = "";
   if (stepId) {
     const { data } = await supabase.from("steps").select("title, skills(name)").eq("id", stepId).single();
-    if (data) title = `${(data.skills as unknown as { name: string })?.name} · ${data.title}`;
+    if (data) title = `${titleCase((data.skills as unknown as { name: string })?.name)} · ${titleCase(data.title)}`;
   }
 
   return (

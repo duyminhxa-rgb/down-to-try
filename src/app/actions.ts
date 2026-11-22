@@ -6,6 +6,7 @@ import { getUserAndProfile } from "@/lib/supabase/server";
 import { generateRoadmap, splitStep as aiSplitStep, logCost, type GeneratedStep } from "@/lib/ai";
 import { findVideos } from "@/lib/youtube";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { titleCase } from "@/lib/text";
 
 async function attachVideos(
   supabase: SupabaseClient,
@@ -28,7 +29,7 @@ async function attachVideos(
 
 function stepRow(g: GeneratedStep, extra: Record<string, unknown>) {
   return {
-    title: g.title,
+    title: titleCase(g.title),
     explanation: g.explanation,
     why_it_matters: g.why_it_matters,
     practice: g.practice,
@@ -62,7 +63,7 @@ export async function createSkill(_prev: { error?: string } | undefined, formDat
     .from("skills")
     .insert({
       user_id: user.id,
-      name: roadmap.skill_name || skill,
+      name: titleCase(roadmap.skill_name || skill),
       goal: goal || null,
       starting_level: level,
       language: profile.language,
@@ -78,7 +79,7 @@ export async function createSkill(_prev: { error?: string } | undefined, formDat
   roadmap.levels.forEach((lvl, li) => {
     lvl.steps.forEach((s) => {
       generated.push(s);
-      rows.push(stepRow(s, { skill_id: skillRow.id, level: li + 1, level_name: lvl.name, position: pos++ }));
+      rows.push(stepRow(s, { skill_id: skillRow.id, level: li + 1, level_name: titleCase(lvl.name), position: pos++ }));
     });
   });
   const { data: inserted } = await supabase.from("steps").insert(rows).select("id, position").order("position");

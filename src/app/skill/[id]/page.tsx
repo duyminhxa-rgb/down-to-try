@@ -3,6 +3,8 @@ import { notFound, redirect } from "next/navigation";
 import { getUserAndProfile } from "@/lib/supabase/server";
 import { t } from "@/lib/i18n";
 import DeleteSkillButton from "@/components/DeleteSkillButton";
+import SkillCover from "@/components/SkillCover";
+import { titleCase } from "@/lib/text";
 
 type Step = {
   id: string;
@@ -32,7 +34,7 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
   const nextStep = visible.find((s) => s.status !== "done");
   const levels = new Map<string, Step[]>();
   visible.forEach((s) => {
-    const key = s.level_name || `Level ${s.level}`;
+    const key = titleCase(s.level_name || `Level ${s.level}`);
     levels.set(key, [...(levels.get(key) ?? []), s]);
   });
   const done = visible.filter((s) => s.status === "done").length;
@@ -42,8 +44,14 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
       <Link href="/" className="text-ink/60">
         {t(lang, "back")}
       </Link>
+      <SkillCover
+        skillId={skill.id}
+        coverUrl={skill.cover_url}
+        name={titleCase(skill.name)}
+        className="aspect-[21/9] rounded-3xl border border-line"
+      />
       <div>
-        <h1 className="text-4xl font-extrabold">{skill.name}</h1>
+        <h1 className="text-4xl font-black tracking-tight">{titleCase(skill.name)}</h1>
         <p className="mt-2 text-lg text-ink/70">{skill.summary}</p>
         <p className="mt-2 font-semibold text-mint">
           {done}/{visible.length} {t(lang, "steps")} {t(lang, "done")}
@@ -53,7 +61,7 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
       {nextStep && (
         <Link href={`/step/${nextStep.id}`} className="btn-primary w-full text-xl">
           {lang === "en" ? "Continue: " : "Tiếp tục: "}
-          {nextStep.title}
+          {titleCase(nextStep.title)}
         </Link>
       )}
 
@@ -79,7 +87,7 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
                     {s.status === "done" ? "✓" : s.parent_step_id ? "·" : ""}
                   </span>
                   <span className={s.status === "done" ? "text-ink/50 line-through" : "font-semibold"}>
-                    {s.title}
+                    {titleCase(s.title)}
                   </span>
                 </Link>
               </li>

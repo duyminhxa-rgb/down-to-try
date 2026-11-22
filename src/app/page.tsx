@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getUserAndProfile } from "@/lib/supabase/server";
 import NewSkillForm from "@/components/NewSkillForm";
 import SkillCard, { progressOf, type SkillSummary } from "@/components/SkillCard";
+import { titleCase } from "@/lib/text";
 
 export const maxDuration = 300;
 
@@ -15,7 +16,7 @@ export default async function Home() {
   const [{ data: skills }, { count: sessions }, { data: lastDone }] = await Promise.all([
     supabase
       .from("skills")
-      .select("id, name, summary, created_at, steps(id, title, status, position)")
+      .select("id, name, summary, cover_url, created_at, steps(id, title, status, position)")
       .order("created_at", { ascending: false }),
     supabase.from("coach_sessions").select("id", { count: "exact", head: true }),
     supabase.from("steps").select("completed_at").eq("status", "done").order("completed_at", { ascending: false }).limit(60),
@@ -79,8 +80,8 @@ export default async function Home() {
               <div key={n} className="w-10 rounded-t-lg bg-brand" style={{ height: 20 + n * 22 }} />
             ))}
           </div>
-          <p className="eyebrow !text-white/50">{en ? "Continue learning" : "Học tiếp"} · {active.name}</p>
-          <p className="mt-2 max-w-xl text-2xl font-extrabold leading-snug sm:text-3xl">{nextStep.title}</p>
+          <p className="eyebrow !text-white/50">{en ? "Continue learning" : "Học tiếp"} · {titleCase(active.name)}</p>
+          <p className="mt-2 max-w-xl text-2xl font-extrabold leading-snug sm:text-3xl">{titleCase(nextStep.title)}</p>
           <span className="btn-primary mt-5">{en ? "Practice now →" : "Luyện ngay →"}</span>
         </Link>
       )}

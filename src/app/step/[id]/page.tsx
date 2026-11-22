@@ -6,6 +6,7 @@ import StepActions from "@/components/StepActions";
 import StepChat from "@/components/StepChat";
 import VideoPicker from "@/components/VideoPicker";
 import { findVideos } from "@/lib/youtube";
+import { titleCase } from "@/lib/text";
 
 export const maxDuration = 300;
 
@@ -51,17 +52,17 @@ export default async function StepPage({ params }: { params: Promise<{ id: strin
   return (
     <div className="space-y-6">
       <Link href={`/skill/${step.skills.id}`} className="text-ink/60">
-        ← {step.skills.name}
+        ← {titleCase(step.skills.name)}
       </Link>
 
       <div>
         {parent.data && (
           <p className="text-sm text-ink/50">
-            {t(lang, "splitFrom")} {parent.data.title}
+            {t(lang, "splitFrom")} {titleCase(parent.data.title)}
           </p>
         )}
-        <p className="text-sm font-semibold uppercase tracking-wide text-brand">{step.level_name}</p>
-        <h1 className="text-3xl font-extrabold leading-tight">{step.title}</h1>
+        <p className="text-sm font-semibold uppercase tracking-wide text-brand">{titleCase(step.level_name)}</p>
+        <h1 className="text-3xl font-extrabold leading-tight">{titleCase(step.title)}</h1>
       </div>
 
       {videos && videos.length > 0 && <VideoPicker videos={videos} label={t(lang, "moreVideos")} />}
