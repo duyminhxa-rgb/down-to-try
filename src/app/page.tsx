@@ -39,7 +39,9 @@ export default async function Home() {
     ?.filter((x) => x.status !== "split" && x.status !== "done")
     .sort((a, b) => a.position - b.position)[0];
 
-  const hour = new Date().getHours();
+  const hour = Number(
+    new Intl.DateTimeFormat("en-US", { hour: "numeric", hour12: false, timeZone: "America/Los_Angeles" }).format(new Date())
+  );
   const hello = en
     ? hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening"
     : hour < 12 ? "Chào buổi sáng" : hour < 18 ? "Chào buổi chiều" : "Chào buổi tối";
