@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { getUserAndProfile } from "@/lib/supabase/server";
+import { geminiKey } from "@/lib/keys";
 
 const LIVE_MODEL = process.env.GEMINI_LIVE_MODEL || "gemini-3.8-live";
 
@@ -19,7 +20,7 @@ function langLine(lang: string) {
 export async function GET(req: Request) {
   const { supabase, user, profile } = await getUserAndProfile();
   if (!user || !profile) return NextResponse.json({ error: "Not signed in" }, { status: 401 });
-  if (!process.env.GEMINI_API_KEY) return NextResponse.json({ error: "GEMINI_API_KEY missing" }, { status: 500 });
+  if (!geminiKey()) return NextResponse.json({ error: "GEMINI_API_KEY missing" }, { status: 500 });
 
   const stepId = new URL(req.url).searchParams.get("step");
   let context = "No specific lesson selected — help with whatever the learner wants to practice. Ask what they're working on first.";
@@ -54,7 +55,7 @@ How to coach:
 
 Language: ${langLine(lang)}`;
 
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  const ai = new GoogleGenAI({ apiKey: geminiKey() });
   const now = Date.now();
   try {
     const token = await ai.authTokens.create({

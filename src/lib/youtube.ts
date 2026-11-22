@@ -1,3 +1,5 @@
+import { youtubeKey } from "./keys";
+
 export type Video = {
   youtube_id: string;
   title: string;
@@ -15,7 +17,7 @@ function decode(s: string) {
 }
 
 async function search(q: string, lang?: string): Promise<Video[]> {
-  const key = process.env.YOUTUBE_API_KEY;
+  const key = youtubeKey();
   if (!key || !q) return [];
   const params = new URLSearchParams({
     part: "snippet",
