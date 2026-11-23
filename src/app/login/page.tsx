@@ -43,7 +43,7 @@ export default function LoginPage() {
             <Logo size={40} /> Down <span className="-ml-2 text-brand">To Try</span>
           </div>
           <h1 className="mt-10 text-6xl font-black leading-[1.02] tracking-tight text-ink">
-            Not talented?
+            Not Talented?
             <br />
             <span className="text-brand">Perfect.</span>
           </h1>
