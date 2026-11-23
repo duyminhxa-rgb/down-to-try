@@ -50,3 +50,12 @@ body {
 @utility eyebrow {
   @apply text-xs font-bold uppercase tracking-[0.14em] text-ink/50;
 }
+
+@keyframes sprout-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  30% { transform: translateY(-10px) rotate(-3deg); }
+  60% { transform: translateY(0) rotate(2deg); }
+}
+.animate-sprout-bounce {
+  animation: sprout-bounce 1.4s ease-in-out infinite;
+}

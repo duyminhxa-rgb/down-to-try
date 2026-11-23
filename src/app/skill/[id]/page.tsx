@@ -60,7 +60,7 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
 
       {nextStep && (
         <Link href={`/step/${nextStep.id}`} className="btn-primary w-full text-xl">
-          {lang === "en" ? "Continue: " : "Tiếp tục: "}
+          {lang === "en" ? "Continue: " : "Tiếp Tục: "}
           {titleCase(nextStep.title)}
         </Link>
       )}

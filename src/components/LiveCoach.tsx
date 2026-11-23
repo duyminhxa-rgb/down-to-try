@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { GoogleGenAI, Modality, type LiveServerMessage, type Session } from "@google/genai";
+import Sprout from "./Sprout";
+import Icon from "./Icon";
 
 type Source = "camera" | "screen" | "voice";
 type Line = { role: "you" | "coach"; text: string };
@@ -9,17 +11,17 @@ type Status = "idle" | "connecting" | "live" | "reconnecting" | "error";
 
 const L = {
   en: {
-    camera: "📷 Camera",
-    screen: "🖥️ Share screen",
-    voice: "🎙️ Voice only",
-    start: "Start coaching",
-    stop: "End session",
+    camera: "Camera",
+    screen: "Share Screen",
+    voice: "Voice Only",
+    start: "Start Coaching",
+    stop: "End Session",
     connecting: "Connecting…",
     reconnecting: "Reconnecting…",
-    live: "Live — just talk",
-    mute: "Mute mic",
+    live: "Live — Just Talk",
+    mute: "Mute Mic",
     unmute: "Unmute",
-    flip: "Flip camera",
+    flip: "Flip Camera",
     typeHere: "Or type a question…",
     tipTitle: "Tips",
     tips: [
@@ -34,17 +36,17 @@ const L = {
     noScreen: "Screen sharing isn't supported on this device (iPhone/iPad). Use camera or voice.",
   },
   vi: {
-    camera: "📷 Camera",
-    screen: "🖥️ Chia sẻ màn hình",
-    voice: "🎙️ Chỉ giọng nói",
-    start: "Bắt đầu",
-    stop: "Kết thúc",
+    camera: "Camera",
+    screen: "Chia Sẻ Màn Hình",
+    voice: "Chỉ Giọng Nói",
+    start: "Bắt Đầu",
+    stop: "Kết Thúc",
     connecting: "Đang kết nối…",
     reconnecting: "Đang kết nối lại…",
     live: "Đang trực tiếp — cứ nói chuyện",
-    mute: "Tắt mic",
-    unmute: "Bật mic",
-    flip: "Đổi camera",
+    mute: "Tắt Mic",
+    unmute: "Bật Mic",
+    flip: "Đổi Camera",
     typeHere: "Hoặc gõ câu hỏi…",
     tipTitle: "Mẹo",
     tips: [
@@ -452,7 +454,9 @@ export default function LiveCoach({ stepId, lang }: { stepId: string | null; lan
           }`}
         />
         {!showVideo && (
-          <div className="flex aspect-video items-center justify-center text-7xl">{coachTalking ? "🗣️" : "🎙️"}</div>
+          <div className="flex aspect-video items-center justify-center bg-brand-soft">
+            <Sprout pose={coachTalking ? "wave" : "coach"} size={200} bounce={coachTalking} />
+          </div>
         )}
         {active && (
           <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full bg-black/60 px-3 py-1 text-sm text-white">
@@ -465,7 +469,7 @@ export default function LiveCoach({ stepId, lang }: { stepId: string | null; lan
             <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/20">
               <div className="h-full bg-mint transition-all" style={{ width: `${Math.min(100, level * 250)}%` }} />
             </div>
-            {coachTalking && <span className="rounded-full bg-brand px-3 py-1 text-sm text-white">🗣️ {tx.coach}</span>}
+            {coachTalking && <span className="rounded-full bg-brand px-3 py-1 text-sm font-semibold text-white">{tx.coach} …</span>}
           </div>
         )}
       </div>
@@ -481,13 +485,13 @@ export default function LiveCoach({ stepId, lang }: { stepId: string | null; lan
               ■ {tx.stop}
             </button>
             <button onClick={() => setMuted((m) => !m)} className="btn-ghost">
-              {muted ? `🔇 ${tx.unmute}` : `🎙️ ${tx.mute}`}
+              {muted ? tx.unmute : tx.mute}
             </button>
           </>
         )}
         {source === "camera" && (
           <button onClick={flip} className="btn-ghost">
-            🔄 {tx.flip}
+            {tx.flip}
           </button>
         )}
       </div>
@@ -512,7 +516,7 @@ export default function LiveCoach({ stepId, lang }: { stepId: string | null; lan
       </section>
 
       <section className="card">
-        <h3 className="mb-2 font-bold">💡 {tx.tipTitle}</h3>
+        <h3 className="mb-2 flex items-center gap-2 font-bold"><Icon name="why" size={26} /> {tx.tipTitle}</h3>
         <ul className="list-disc space-y-1 pl-6 text-ink/70">
           {tx.tips.map((tip) => (
             <li key={tip}>{tip}</li>

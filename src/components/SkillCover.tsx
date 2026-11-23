@@ -58,7 +58,7 @@ export default function SkillCover({
         <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-brand-soft via-[#fff3c4] to-[#dff3ea]">
           <span className="text-5xl font-black text-ink/20">{name.slice(0, 1).toUpperCase()}</span>
           {!failed && (
-            <span className="absolute bottom-2 right-3 animate-pulse text-xs font-semibold text-ink/40">🎨 drawing…</span>
+            <span className="absolute bottom-2 right-3 animate-pulse text-xs font-semibold text-ink/40">Sprout is drawing…</span>
           )}
         </div>
       )}

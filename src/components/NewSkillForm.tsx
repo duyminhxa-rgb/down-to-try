@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { createSkill } from "@/app/actions";
 import { TRACKS } from "@/lib/catalog";
+import { SproutLoader } from "./Sprout";
 
 export default function NewSkillForm({ lang }: { lang: string }) {
   const en = lang === "en";
@@ -11,6 +12,18 @@ export default function NewSkillForm({ lang }: { lang: string }) {
   const [track, setTrack] = useState(TRACKS[0].id);
   const [skill, setSkill] = useState("");
   const current = TRACKS.find((t) => t.id === track)!;
+
+  if (pending)
+    return (
+      <SproutLoader
+        title={en ? `Building your ${skill} path…` : `Đang tạo lộ trình ${skill}…`}
+        subtitle={
+          en
+            ? "Sprout is breaking it into tiny steps and finding the best video for each one. About a minute."
+            : "Sprout đang chia nhỏ từng bước và tìm video hay nhất cho mỗi bước. Khoảng 1 phút."
+        }
+      />
+    );
 
   return (
     <div className="space-y-5">
@@ -36,7 +49,7 @@ export default function NewSkillForm({ lang }: { lang: string }) {
 
       {/* Suggestions */}
       <div>
-        <p className="eyebrow mb-2">{en ? "Popular in" : "Phổ biến trong"} {current.name[l]}</p>
+        <p className="eyebrow mb-2">{en ? "Popular In" : "Phổ Biến Trong"} {current.name[l]}</p>
         <div className="flex flex-wrap gap-2">
           {current.skills.map((s) => (
             <button
@@ -70,11 +83,11 @@ export default function NewSkillForm({ lang }: { lang: string }) {
           />
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-sm font-semibold text-ink/60">{en ? "I'm a" : "Mình là"}</span>
+          <span className="mr-1 text-sm font-semibold text-ink/60">{en ? "I'm a" : "Mình Là"}</span>
           {[
-            ["total beginner", en ? "Total beginner" : "Chưa biết gì"],
-            ["knows a little", en ? "Know a little" : "Biết chút chút"],
-            ["some experience", en ? "Some experience" : "Có kinh nghiệm"],
+            ["total beginner", en ? "Total Beginner" : "Chưa Biết Gì"],
+            ["knows a little", en ? "Know a Little" : "Biết Chút Chút"],
+            ["some experience", en ? "Some Experience" : "Có Kinh Nghiệm"],
           ].map(([v, label], i) => (
             <label key={v} className="cursor-pointer">
               <input type="radio" name="level" value={v} defaultChecked={i === 0} className="peer sr-only" />
@@ -84,7 +97,7 @@ export default function NewSkillForm({ lang }: { lang: string }) {
             </label>
           ))}
           <button className="btn-primary ml-auto w-full sm:w-auto" disabled={pending || !skill.trim()}>
-            {pending ? (en ? "Building your path…" : "Đang tạo lộ trình…") : en ? "Start learning →" : "Bắt đầu học →"}
+            {pending ? (en ? "Building Your Path…" : "Đang Tạo Lộ Trình…") : en ? "Start Learning →" : "Bắt Đầu Học →"}
           </button>
         </div>
         {pending && (

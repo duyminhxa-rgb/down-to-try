@@ -21,11 +21,11 @@ export default async function SettingsPage() {
       <h1 className="text-3xl font-extrabold">{t(lang, "settings")}</h1>
       <form action={updateProfile} className="card space-y-4">
         <label className="block">
-          <span className="font-semibold">{lang === "en" ? "Your name" : "Tên của bạn"}</span>
+          <span className="font-semibold">{lang === "en" ? "Your Name" : "Tên Của Bạn"}</span>
           <input name="display_name" defaultValue={profile.display_name} className="input mt-1" />
         </label>
         <fieldset>
-          <legend className="mb-2 font-semibold">{lang === "en" ? "Language" : "Ngôn ngữ"}</legend>
+          <legend className="mb-2 font-semibold">{lang === "en" ? "Language" : "Ngôn Ngữ"}</legend>
           <div className="grid gap-2">
             {[
               ["en", "English"],
@@ -48,7 +48,7 @@ export default async function SettingsPage() {
       </form>
 
       <div className="card">
-        <p className="font-semibold">{lang === "en" ? "AI cost this month (approx.)" : "Chi phí AI tháng này (ước tính)"}</p>
+        <p className="font-semibold">{lang === "en" ? "AI Cost This Month (Approx.)" : "Chi Phí AI Tháng Này (Ước Tính)"}</p>
         <p className="text-3xl font-extrabold">${monthCost.toFixed(2)}</p>
         <p className="text-sm text-ink/50">Claude only — live coach usage shows in Google AI Studio billing.</p>
       </div>

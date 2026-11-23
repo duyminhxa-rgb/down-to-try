@@ -69,7 +69,7 @@ export const TRACKS: Track[] = [
     color: "bg-[#ffe9d6]",
     name: { en: "Kitchen", vi: "Nấu ăn" },
     skills: [
-      { en: "Knife skills", vi: "Kỹ năng dùng dao" },
+      { en: "Knife skills", vi: "Kỹ Năng dùng dao" },
       { en: "Cooking phở at home", vi: "Nấu phở tại nhà" },
       { en: "Baking bread", vi: "Làm bánh mì" },
       { en: "Vietnamese phin coffee", vi: "Pha cà phê phin" },

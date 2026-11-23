@@ -3,6 +3,8 @@ import Link from "next/link";
 import "./globals.css";
 import { getUserAndProfile } from "@/lib/supabase/server";
 import Logo from "@/components/Logo";
+import Credit from "@/components/Credit";
+import Icon, { type IconName } from "@/components/Icon";
 
 export const metadata: Metadata = {
   title: "Down To Try — learn anything, one small step at a time",
@@ -35,13 +37,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               </Link>
               <nav className="hidden items-center gap-1 text-[15px] font-semibold sm:flex">
                 <Link href="/" className="rounded-lg px-3 py-2 hover:bg-white">
-                  {en ? "Home" : "Trang chủ"}
+                  {en ? "Home" : "Trang Chủ"}
                 </Link>
                 <Link href="/skills" className="rounded-lg px-3 py-2 hover:bg-white">
-                  {en ? "My skills" : "Kỹ năng"}
+                  {en ? "My Skills" : "Kỹ Năng"}
                 </Link>
                 <Link href="/coach" className="rounded-lg px-3 py-2 hover:bg-white">
-                  {en ? "Live coach" : "HLV trực tiếp"}
+                  {en ? "Live Coach" : "HLV Trực Tiếp"}
                 </Link>
               </nav>
               <Link
@@ -54,16 +56,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </div>
           </header>
         )}
-        <main className={profile ? "mx-auto max-w-5xl px-4 pb-28 pt-6" : ""}>{children}</main>
+        <main className={profile ? "mx-auto max-w-5xl px-4 pb-8 pt-6" : ""}>{children}</main>
+        {profile && <Credit className="pb-28 pt-4 sm:pb-10" />}
         {profile && (
           <nav className="fixed inset-x-0 bottom-0 z-20 grid grid-cols-3 border-t border-line bg-white text-xs font-semibold sm:hidden">
-            {[
-              ["/", "🏠", en ? "Home" : "Trang chủ"],
-              ["/skills", "🪜", en ? "Skills" : "Kỹ năng"],
-              ["/coach", "🎥", en ? "Coach" : "HLV"],
-            ].map(([href, icon, label]) => (
-              <Link key={href} href={href} className="flex flex-col items-center gap-0.5 py-2.5">
-                <span className="text-xl">{icon}</span>
+            {(
+              [
+                ["/", "home", en ? "Home" : "Trang Chủ"],
+                ["/skills", "steps", en ? "Skills" : "Kỹ Năng"],
+                ["/coach", "coach", en ? "Coach" : "HLV"],
+              ] as [string, IconName, string][]
+            ).map(([href, icon, label]) => (
+              <Link key={href} href={href} className="flex flex-col items-center gap-0.5 py-2">
+                <Icon name={icon} size={28} />
                 {label}
               </Link>
             ))}

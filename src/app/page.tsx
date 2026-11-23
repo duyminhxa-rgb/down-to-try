@@ -4,6 +4,8 @@ import { getUserAndProfile } from "@/lib/supabase/server";
 import NewSkillForm from "@/components/NewSkillForm";
 import SkillCard, { progressOf, type SkillSummary } from "@/components/SkillCard";
 import { titleCase } from "@/lib/text";
+import Sprout from "@/components/Sprout";
+import Icon, { type IconName } from "@/components/Icon";
 
 export const maxDuration = 300;
 
@@ -45,26 +47,35 @@ export default async function Home() {
   );
   const hello = en
     ? hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening"
-    : hour < 12 ? "Chào buổi sáng" : hour < 18 ? "Chào buổi chiều" : "Chào buổi tối";
+    : hour < 12 ? "Chào Buổi Sáng" : hour < 18 ? "Chào Buổi Chiều" : "Chào Buổi Tối";
 
   return (
     <div className="space-y-8">
       <section className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">{hello}</p>
-          <h1 className="text-4xl font-black tracking-tight">{profile.display_name} 👋</h1>
+        <div className="flex items-center gap-3">
+          <Sprout pose="wave" size={72} />
+          <div>
+            <p className="eyebrow">{hello}</p>
+            <h1 className="text-4xl font-black tracking-tight">{profile.display_name}</h1>
+          </div>
         </div>
         <div className="flex gap-2">
-          {[
-            ["🔥", streak, en ? "day streak" : "ngày liên tiếp"],
-            ["✅", stepsDone, en ? "steps done" : "bước xong"],
-            ["🎥", sessions ?? 0, en ? "coach sessions" : "buổi HLV"],
-          ].map(([icon, n, label]) => (
-            <div key={String(label)} className="rounded-2xl border border-line bg-white px-4 py-2 text-center">
-              <p className="text-xl font-black">
-                {icon} {n}
-              </p>
-              <p className="text-xs font-semibold text-ink/50">{label}</p>
+          {(
+            [
+              ["streak", streak, en ? "Day Streak" : "Ngày Liên Tiếp"],
+              ["done", stepsDone, en ? "Steps Done" : "Bước Xong"],
+              ["coach", sessions ?? 0, en ? "Coach Sessions" : "Buổi HLV"],
+            ] as [IconName, number, string][]
+          ).map(([icon, n, label]) => (
+            <div
+              key={label}
+              className="flex items-center gap-2 rounded-2xl border border-line bg-white px-3 py-2 shadow-[0_3px_0_#e2eae6]"
+            >
+              <Icon name={icon} size={34} />
+              <div>
+                <p className="text-xl font-black leading-none">{n}</p>
+                <p className="text-xs font-semibold text-ink/50">{label}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -81,14 +92,14 @@ export default async function Home() {
             alt=""
             className="pointer-events-none absolute -bottom-6 -right-6 w-40 rotate-6 opacity-90 sm:w-48"
           />
-          <p className="eyebrow !text-white/80">{en ? "Continue learning" : "Học tiếp"} · {titleCase(active.name)}</p>
+          <p className="eyebrow !text-white/80">{en ? "Continue Learning" : "Học Tiếp"} · {titleCase(active.name)}</p>
           <p className="mt-2 max-w-xl text-2xl font-extrabold leading-snug sm:text-3xl max-w-md">{titleCase(nextStep.title)}</p>
-          <span className="mt-5 inline-flex items-center rounded-xl bg-white px-5 py-3 font-bold text-brand-dark shadow-[0_4px_0_rgba(0,0,0,0.15)]">{en ? "Practice now →" : "Luyện ngay →"}</span>
+          <span className="mt-5 inline-flex items-center rounded-xl bg-white px-5 py-3 font-bold text-brand-dark shadow-[0_4px_0_rgba(0,0,0,0.15)]">{en ? "Practice Now →" : "Luyện Ngay →"}</span>
         </Link>
       )}
 
       <section className="card !p-6">
-        <h2 className="text-2xl font-black tracking-tight">{en ? "What are you down to try?" : "Bạn muốn thử học gì?"}</h2>
+        <h2 className="text-2xl font-black tracking-tight">{en ? "What Are You Down to Try?" : "Bạn Muốn Thử Học Gì?"}</h2>
         <p className="mb-5 text-ink/60">
           {en
             ? "Pick a path or type anything. We'll break it into small steps with a video for each."
@@ -100,9 +111,9 @@ export default async function Home() {
       {list.length > 0 && (
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-2xl font-black tracking-tight">{en ? "My skills" : "Kỹ năng của tôi"}</h2>
+            <h2 className="text-2xl font-black tracking-tight">{en ? "My Skills" : "Kỹ Năng Của Tôi"}</h2>
             <Link href="/skills" className="text-sm font-bold text-brand">
-              {en ? "See all →" : "Xem tất cả →"}
+              {en ? "See All →" : "Xem Tất Cả →"}
             </Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

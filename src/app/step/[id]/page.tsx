@@ -7,6 +7,8 @@ import StepChat from "@/components/StepChat";
 import VideoPicker from "@/components/VideoPicker";
 import { findVideos } from "@/lib/youtube";
 import { titleCase } from "@/lib/text";
+import Sprout from "@/components/Sprout";
+import Icon from "@/components/Icon";
 
 export const maxDuration = 300;
 
@@ -71,25 +73,25 @@ export default async function StepPage({ params }: { params: Promise<{ id: strin
         <p className="text-lg leading-relaxed">{step.explanation}</p>
         {step.why_it_matters && (
           <div>
-            <h3 className="font-bold">💡 {t(lang, "why")}</h3>
+            <h3 className="flex items-center gap-2 font-bold"><Icon name="why" size={26} /> {t(lang, "why")}</h3>
             <p className="text-ink/80">{step.why_it_matters}</p>
           </div>
         )}
         {step.practice && (
           <div className="rounded-2xl bg-cream p-4">
-            <h3 className="font-bold">🏋️ {t(lang, "practice")}</h3>
+            <h3 className="flex items-center gap-2 font-bold"><Icon name="practice" size={26} /> {t(lang, "practice")}</h3>
             <p>{step.practice}</p>
           </div>
         )}
         {step.done_looks_like && (
           <div>
-            <h3 className="font-bold">🎯 {t(lang, "doneLooks")}</h3>
+            <h3 className="flex items-center gap-2 font-bold"><Icon name="target" size={26} /> {t(lang, "doneLooks")}</h3>
             <p className="text-ink/80">{step.done_looks_like}</p>
           </div>
         )}
         {step.common_mistakes?.length > 0 && (
           <div>
-            <h3 className="font-bold">⚠️ {t(lang, "mistakes")}</h3>
+            <h3 className="flex items-center gap-2 font-bold"><Icon name="warning" size={26} /> {t(lang, "mistakes")}</h3>
             <ul className="list-disc space-y-1 pl-6 text-ink/80">
               {step.common_mistakes.map((m: string) => (
                 <li key={m}>{m}</li>
@@ -99,11 +101,14 @@ export default async function StepPage({ params }: { params: Promise<{ id: strin
         )}
       </section>
 
-      <Link href={`/coach?step=${step.id}`} className="card flex items-center gap-4 !bg-ink text-white">
-        <span className="text-4xl">🎥</span>
+      <Link
+        href={`/coach?step=${step.id}`}
+        className="card flex items-center gap-4 !border-sky/30 !bg-sky-soft transition hover:-translate-y-0.5"
+      >
+        <Sprout pose="coach" size={88} />
         <span>
           <span className="block text-xl font-bold">{t(lang, "liveCoach")}</span>
-          <span className="text-white/70">{t(lang, "liveCoachDesc")}</span>
+          <span className="text-ink/60">{t(lang, "liveCoachDesc")}</span>
         </span>
       </Link>
 

@@ -3,12 +3,15 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import Logo from "@/components/Logo";
+import Credit from "@/components/Credit";
+import Sprout from "@/components/Sprout";
+import Icon, { type IconName } from "@/components/Icon";
 
-const FEATURES = [
-  ["🪜", "Tiny steps", "Any skill broken into steps a normal person can actually do.", "Từng bước nhỏ ai cũng làm được."],
-  ["🎬", "The right video", "A real teacher's video for every single step.", "Video hướng dẫn cho từng bước."],
-  ["🎥", "Live coach", "Show your hands, your drawing or your screen and talk it through.", "Huấn luyện viên nhìn và nghe bạn."],
-  ["🆘", "“I'm stuck” button", "Too hard? It splits the step smaller. No talent required.", "Khó quá? Chia nhỏ ra."],
+const FEATURES: [IconName, string, string, string][] = [
+  ["steps", "Tiny Steps", "Any skill broken into steps a normal person can actually do.", "Từng bước nhỏ ai cũng làm được."],
+  ["video", "The Right Video", "A real teacher's video for every single step.", "Video hướng dẫn cho từng bước."],
+  ["coach", "Live Coach", "Show your hands, your drawing or your screen and talk it through.", "Huấn luyện viên nhìn và nghe bạn."],
+  ["help", "“I'm Stuck” Button", "Too hard? It splits the step smaller. No talent required.", "Khó quá? Chia nhỏ ra."],
 ];
 
 export default function LoginPage() {
@@ -68,7 +71,8 @@ export default function LoginPage() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand/hero.webp" alt="" className="mt-4 w-full rounded-2xl" />
           </div>
-          <h2 className="text-4xl font-black tracking-tight">{sent ? "Check your email 📬" : "Welcome in"}</h2>
+          {sent && <Sprout pose="wave" size={120} className="mb-2" />}
+          <h2 className="text-4xl font-black tracking-tight">{sent ? "Check Your Email" : "Welcome In"}</h2>
           <p className="mt-2 text-ink/60">
             {sent ? (
               <>
@@ -97,7 +101,7 @@ export default function LoginPage() {
                 placeholder="you@email.com"
               />
               <button className="btn-primary w-full text-lg" disabled={loading}>
-                {loading ? "Sending…" : "Continue with email →"}
+                {loading ? "Sending…" : "Continue With Email →"}
               </button>
               {error && <p className="rounded-xl bg-red-50 p-3 text-red-700">{error}</p>}
             </form>
@@ -110,13 +114,14 @@ export default function LoginPage() {
           <div className="mt-12 grid gap-4 sm:grid-cols-2">
             {FEATURES.map(([icon, title, en, vi]) => (
               <div key={title} className="rounded-2xl border border-line bg-white p-4">
-                <div className="text-2xl">{icon}</div>
+                <Icon name={icon} size={40} />
                 <p className="mt-2 font-bold">{title}</p>
                 <p className="text-sm text-ink/60">{en}</p>
                 <p className="text-sm text-ink/40">{vi}</p>
               </div>
             ))}
           </div>
+          <Credit className="mt-10" />
         </div>
       </section>
     </div>

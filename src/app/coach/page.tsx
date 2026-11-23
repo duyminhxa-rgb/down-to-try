@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getUserAndProfile } from "@/lib/supabase/server";
 import LiveCoach from "@/components/LiveCoach";
 import { titleCase } from "@/lib/text";
+import Sprout from "@/components/Sprout";
 
 export default async function CoachPage({ searchParams }: { searchParams: Promise<{ step?: string }> }) {
   const { step: stepId } = await searchParams;
@@ -18,11 +19,14 @@ export default async function CoachPage({ searchParams }: { searchParams: Promis
   return (
     <div className="space-y-4">
       <Link href={stepId ? `/step/${stepId}` : "/"} className="text-ink/60">
-        {profile.language === "en" ? "← Back" : "← Quay lại"}
+        {profile.language === "en" ? "← Back" : "← Quay Lại"}
       </Link>
-      <div>
-        <h1 className="text-3xl font-extrabold">🎥 Live coach</h1>
-        {title && <p className="text-ink/60">{title}</p>}
+      <div className="flex items-center gap-4">
+        <Sprout pose="coach" size={96} />
+        <div>
+          <h1 className="text-3xl font-black">{profile.language === "en" ? "Live Coach" : "Huấn Luyện Trực Tiếp"}</h1>
+          {title && <p className="text-ink/60">{title}</p>}
+        </div>
       </div>
       <LiveCoach stepId={stepId ?? null} lang={profile.language} />
     </div>
