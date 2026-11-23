@@ -7,7 +7,7 @@ import Credit from "@/components/Credit";
 import Icon, { type IconName } from "@/components/Icon";
 
 export const metadata: Metadata = {
-  title: "Down To Try — learn anything, one small step at a time",
+  title: "Sprout It — every expert was once a sprout",
   description: "Learn anything, one small step at a time. Học bất cứ thứ gì, từng bước nhỏ một.",
 };
 
@@ -32,7 +32,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Link href="/" className="flex items-center gap-2 text-lg font-extrabold tracking-tight">
                 <Logo size={30} />
                 <span>
-                  Down <span className="text-brand">To Try</span>
+                  Sprout <span className="text-brand">It</span>
                 </span>
               </Link>
               <nav className="hidden items-center gap-1 text-[15px] font-semibold sm:flex">
@@ -40,10 +40,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   {en ? "Home" : "Trang Chủ"}
                 </Link>
                 <Link href="/skills" className="rounded-lg px-3 py-2 hover:bg-white">
-                  {en ? "My Skills" : "Kỹ Năng"}
+                  {en ? "My Garden" : "Vườn"}
                 </Link>
                 <Link href="/coach" className="rounded-lg px-3 py-2 hover:bg-white">
-                  {en ? "Live Coach" : "HLV Trực Tiếp"}
+                  {en ? "Grow With Sprouty" : "Học Cùng Sprouty"}
                 </Link>
               </nav>
               <Link
@@ -63,8 +63,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {(
               [
                 ["/", "home", en ? "Home" : "Trang Chủ"],
-                ["/skills", "steps", en ? "Skills" : "Kỹ Năng"],
-                ["/coach", "coach", en ? "Coach" : "HLV"],
+                ["/skills", "steps", en ? "Garden" : "Vườn"],
+                ["/coach", "coach", "Sprouty"],
               ] as [string, IconName, string][]
             ).map(([href, icon, label]) => (
               <Link key={href} href={href} className="flex flex-col items-center gap-0.5 py-2">

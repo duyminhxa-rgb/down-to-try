@@ -1,4 +1,5 @@
 "use server";
+import { overDailyCap, CAP_MSG } from "@/lib/limits";
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -48,6 +49,7 @@ export async function createSkill(_prev: { error?: string } | undefined, formDat
   const goal = String(formData.get("goal") || "").trim();
   const level = String(formData.get("level") || "total beginner");
   if (!skill) return { error: "Type a skill first." };
+  if (await overDailyCap(supabase, user.id)) return { error: CAP_MSG[profile.language === "en" ? "en" : "vi"] };
 
   let roadmap;
   try {

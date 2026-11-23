@@ -16,6 +16,14 @@ export function progressOf(s: { steps: { status: string }[] | null }) {
   return { done, total: real.length, pct: real.length ? Math.round((done / real.length) * 100) : 0 };
 }
 
+export function growthStage(pct: number, lang: string) {
+  const en = lang === "en";
+  if (pct >= 100) return { emoji: "", label: en ? "In Bloom" : "Ra Hoa", color: "bg-sun/30 text-ink" };
+  if (pct >= 60) return { emoji: "", label: en ? "Sapling" : "Cây Non", color: "bg-brand text-white" };
+  if (pct >= 20) return { emoji: "", label: en ? "Sprout" : "Mầm", color: "bg-brand-soft text-brand-dark" };
+  return { emoji: "", label: en ? "Seed" : "Hạt", color: "bg-cream text-ink/70" };
+}
+
 export default function SkillCard({ s, lang }: { s: SkillSummary; lang: string }) {
   const p = progressOf(s);
   const name = titleCase(s.name);
@@ -28,7 +36,7 @@ export default function SkillCard({ s, lang }: { s: SkillSummary; lang: string }
       <div className="p-4">
         <div className="flex items-start justify-between gap-3">
           <p className="text-lg font-extrabold leading-tight">{name}</p>
-          <span className="shrink-0 rounded-full bg-cream px-2 py-1 text-xs font-bold">{p.pct}%</span>
+          <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold ${growthStage(p.pct, lang).color}`}>{growthStage(p.pct, lang).label} · {p.pct}%</span>
         </div>
         <p className="mt-1 line-clamp-2 text-[15px] text-ink/60">{s.summary}</p>
         <div className="mt-3 flex gap-1">
@@ -37,7 +45,7 @@ export default function SkillCard({ s, lang }: { s: SkillSummary; lang: string }
           ))}
         </div>
         <p className="mt-2 text-sm font-semibold text-ink/50">
-          {p.done}/{p.total} {lang === "en" ? "steps" : "bước"}
+          {p.done}/{p.total} {lang === "en" ? "leaves grown" : "lá đã mọc"}
         </p>
       </div>
     </Link>

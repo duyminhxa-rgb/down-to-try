@@ -62,9 +62,9 @@ export default async function Home() {
         <div className="flex gap-2">
           {(
             [
-              ["streak", streak, en ? "Day Streak" : "Ngày Liên Tiếp"],
-              ["done", stepsDone, en ? "Steps Done" : "Bước Xong"],
-              ["coach", sessions ?? 0, en ? "Coach Sessions" : "Buổi HLV"],
+              ["streak", streak, en ? "Days Watered" : "Ngày Tưới Cây"],
+              ["done", stepsDone, en ? "Leaves Grown" : "Lá Đã Mọc"],
+              ["coach", sessions ?? 0, en ? "Sprouty Sessions" : "Buổi Với Sprouty"],
             ] as [IconName, number, string][]
           ).map(([icon, n, label]) => (
             <div
@@ -99,7 +99,7 @@ export default async function Home() {
       )}
 
       <section className="card !p-6">
-        <h2 className="text-2xl font-black tracking-tight">{en ? "What Are You Down to Try?" : "Bạn Muốn Thử Học Gì?"}</h2>
+        <h2 className="text-2xl font-black tracking-tight">{en ? "What Will You Sprout Next?" : "Hôm Nay Gieo Hạt Gì?"}</h2>
         <p className="mb-5 text-ink/60">
           {en
             ? "Pick a path or type anything. We'll break it into small steps with a video for each."
@@ -111,7 +111,7 @@ export default async function Home() {
       {list.length > 0 && (
         <section>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-2xl font-black tracking-tight">{en ? "My Skills" : "Kỹ Năng Của Tôi"}</h2>
+            <h2 className="text-2xl font-black tracking-tight">{en ? "My Garden" : "Vườn Của Tôi"}</h2>
             <Link href="/skills" className="text-sm font-bold text-brand">
               {en ? "See All →" : "Xem Tất Cả →"}
             </Link>

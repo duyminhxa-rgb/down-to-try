@@ -5,6 +5,7 @@ import { t } from "@/lib/i18n";
 import DeleteSkillButton from "@/components/DeleteSkillButton";
 import SkillCover from "@/components/SkillCover";
 import { titleCase } from "@/lib/text";
+import { growthStage } from "@/components/SkillCard";
 
 type Step = {
   id: string;
@@ -53,9 +54,15 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
       <div>
         <h1 className="text-4xl font-black tracking-tight">{titleCase(skill.name)}</h1>
         <p className="mt-2 text-lg text-ink/70">{skill.summary}</p>
-        <p className="mt-2 font-semibold text-mint">
-          {done}/{visible.length} {t(lang, "steps")} {t(lang, "done")}
+        <p className="mt-2 flex flex-wrap items-center gap-2 font-semibold text-mint">
+          {(() => {
+            const pct = visible.length ? Math.round((done / visible.length) * 100) : 0;
+            const g = growthStage(pct, lang);
+            return <span className={`rounded-full px-3 py-1 text-sm font-bold ${g.color}`}>{g.label}</span>;
+          })()}
+          {done}/{visible.length} {lang === "en" ? "leaves grown" : "lá đã mọc"}
         </p>
+        <p className="mt-1 text-sm text-ink/50">{lang === "en" ? "Seed → Sprout → Sapling → In Bloom" : "Hạt → Mầm → Cây Non → Ra Hoa"}</p>
       </div>
 
       {nextStep && (

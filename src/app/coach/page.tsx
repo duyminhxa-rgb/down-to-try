@@ -24,7 +24,7 @@ export default async function CoachPage({ searchParams }: { searchParams: Promis
       <div className="flex items-center gap-4">
         <Sprout pose="coach" size={96} />
         <div>
-          <h1 className="text-3xl font-black">{profile.language === "en" ? "Live Coach" : "Huấn Luyện Trực Tiếp"}</h1>
+          <h1 className="text-3xl font-black">{profile.language === "en" ? "Grow With Sprouty" : "Học Cùng Sprouty"}</h1>
           {title && <p className="text-ink/60">{title}</p>}
         </div>
       </div>

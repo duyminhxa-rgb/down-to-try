@@ -10,7 +10,7 @@ const ALT: Record<Pose, string> = {
   sleep: "Sprout sleeping",
 };
 
-/** Sprout, the Down To Try mascot. */
+/** Sprouty, the Sprout It mascot. */
 export default function Sprout({
   pose,
   size = 96,

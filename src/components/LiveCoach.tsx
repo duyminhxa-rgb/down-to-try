@@ -32,7 +32,7 @@ const L = {
     ],
     empty: "Your conversation will show here.",
     you: "You",
-    coach: "Coach",
+    coach: "Sprouty",
     noScreen: "Screen sharing isn't supported on this device (iPhone/iPad). Use camera or voice.",
   },
   vi: {
@@ -57,7 +57,7 @@ const L = {
     ],
     empty: "Cuộc trò chuyện sẽ hiện ở đây.",
     you: "Bạn",
-    coach: "HLV",
+    coach: "Sprouty",
     noScreen: "Thiết bị này (iPhone/iPad) không hỗ trợ chia sẻ màn hình. Dùng camera hoặc giọng nói.",
   },
 };

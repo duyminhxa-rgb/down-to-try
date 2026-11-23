@@ -1,13 +1,13 @@
 export type Lang = "en" | "vi" | "mix";
 
 const dict = {
-  appName: { en: "Down To Try", vi: "Down To Try" },
+  appName: { en: "Sprout It", vi: "Sprout It" },
   tagline: {
-    en: "Learn anything, one small step at a time.",
-    vi: "Học bất cứ thứ gì, từng bước nhỏ một.",
+    en: "Every expert was once a sprout.",
+    vi: "Chuyên gia nào cũng từng là một mầm non.",
   },
-  mySkills: { en: "My Skills", vi: "Kỹ Năng Của Tôi" },
-  newSkill: { en: "Learn Something New", vi: "Học Kỹ Năng Mới" },
+  mySkills: { en: "My Garden", vi: "Vườn Của Tôi" },
+  newSkill: { en: "Plant A New Skill", vi: "Gieo Kỹ Năng Mới" },
   skillPlaceholder: {
     en: "e.g. guitar, speaking English, drawing faces, piano…",
     vi: "vd: đàn guitar, nói tiếng Anh, vẽ mặt người, piano…",
@@ -20,19 +20,19 @@ const dict = {
   zero: { en: "Total Beginner", vi: "Chưa Biết Gì" },
   little: { en: "Know a Little", vi: "Biết Chút Chút" },
   some: { en: "Some Experience", vi: "Có Kinh Nghiệm" },
-  build: { en: "Build My Plan", vi: "Tạo Lộ Trình" },
+  build: { en: "Sprout It!", vi: "Gieo Hạt Thôi!" },
   building: {
-    en: "Building your plan + finding videos… (about 1 minute)",
-    vi: "Đang tạo lộ trình + tìm video… (khoảng 1 phút)",
+    en: "Sprouty is planting your plan + finding videos… (about 1 minute)",
+    vi: "Sprouty đang gieo lộ trình + tìm video… (khoảng 1 phút)",
   },
   noSkills: {
-    en: "No skills yet. Pick something you're down to try!",
-    vi: "Chưa có kỹ năng nào. Chọn một thứ bạn muốn thử nhé!",
+    en: "Your garden is empty. Plant your first skill!",
+    vi: "Vườn còn trống. Gieo kỹ năng đầu tiên nhé!",
   },
   steps: { en: "steps", vi: "bước" },
   done: { en: "done", vi: "xong" },
   doneBtn: { en: "✓ I Can Do This", vi: "✓ Mình Làm Được Rồi" },
-  stuckBtn: { en: "I'm Stuck — Make It Smaller", vi: "Khó Quá — Chia Nhỏ Ra" },
+  stuckBtn: { en: "Too Big — Make It Smaller", vi: "Khó Quá — Chia Nhỏ Ra" },
   undo: { en: "Not Yet", vi: "Chưa Được" },
   why: { en: "Why It Matters", vi: "Tại Sao Quan Trọng" },
   practice: { en: "Practice", vi: "Luyện Tập" },
@@ -40,23 +40,23 @@ const dict = {
   mistakes: { en: "Common Mistakes", vi: "Lỗi Hay Gặp" },
   watch: { en: "Watch", vi: "Xem Video" },
   moreVideos: { en: "Other Videos", vi: "Video Khác" },
-  askCoach: { en: "Ask Your Coach", vi: "Hỏi Huấn Luyện Viên" },
+  askCoach: { en: "Ask Sprouty", vi: "Hỏi Sprouty" },
   askPlaceholder: {
     en: "Ask anything about this step…",
     vi: "Hỏi bất cứ điều gì về bước này…",
   },
   send: { en: "Send", vi: "Gửi" },
-  liveCoach: { en: "Live Coach", vi: "Huấn Luyện Trực Tiếp" },
+  liveCoach: { en: "Grow With Sprouty", vi: "Học Cùng Sprouty" },
   liveCoachDesc: {
-    en: "Your coach can see you (camera or screen) and talk with you.",
-    vi: "Huấn luyện viên nhìn thấy bạn (camera hoặc màn hình) và nói chuyện với bạn.",
+    en: "Sprouty can see you (camera or screen) and talk with you, live.",
+    vi: "Sprouty nhìn thấy bạn (camera hoặc màn hình) và nói chuyện trực tiếp với bạn.",
   },
   back: { en: "← Back", vi: "← Quay Lại" },
   settings: { en: "Settings", vi: "Cài Đặt" },
   signOut: { en: "Sign Out", vi: "Đăng Xuất" },
   splitFrom: { en: "Smaller Steps For:", vi: "Các Bước Nhỏ Hơn Cho:" },
   next: { en: "Next Step →", vi: "Bước Tiếp →" },
-  thinking: { en: "Thinking…", vi: "Đang suy nghĩ…" },
+  thinking: { en: "Sprouty is thinking…", vi: "Sprouty đang nghĩ…" },
 } as const;
 
 export type Key = keyof typeof dict;

@@ -19,7 +19,7 @@ export default async function SkillsPage() {
       <div className="flex items-end justify-between">
         <div>
           <p className="eyebrow">{en ? "Your Library" : "Thư Viện"}</p>
-          <h1 className="text-4xl font-black tracking-tight">{en ? "My Skills" : "Kỹ Năng Của Tôi"}</h1>
+          <h1 className="text-4xl font-black tracking-tight">{en ? "My Garden" : "Vườn Của Tôi"}</h1>
         </div>
         <Link href="/" className="btn-primary">
           + {en ? "New Skill" : "Kỹ Năng Mới"}
@@ -29,7 +29,7 @@ export default async function SkillsPage() {
         <div className="card text-center">
           <Sprout pose="sleep" size={160} className="mx-auto" />
           <p className="mt-2 font-bold">{en ? "Nothing Here Yet." : "Chưa Có Gì."}</p>
-          <p className="text-ink/60">{en ? "Pick something you're down to try." : "Chọn một thứ bạn muốn thử nhé."}</p>
+          <p className="text-ink/60">{en ? "Nothing planted yet. Pick a seed!" : "Chưa gieo gì cả. Chọn một hạt nhé!"}</p>
         </div>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { getUserAndProfile } from "@/lib/supabase/server";
 import { geminiKey } from "@/lib/keys";
+import { overLiveCap, CAP_MSG } from "@/lib/limits";
 
 const LIVE_MODEL = process.env.GEMINI_LIVE_MODEL || "gemini-3.8-live";
 
@@ -21,6 +22,8 @@ export async function GET(req: Request) {
   const { supabase, user, profile } = await getUserAndProfile();
   if (!user || !profile) return NextResponse.json({ error: "Not signed in" }, { status: 401 });
   if (!geminiKey()) return NextResponse.json({ error: "GEMINI_API_KEY missing" }, { status: 500 });
+  if (await overLiveCap(supabase, user.id))
+    return NextResponse.json({ error: CAP_MSG[profile.language === "en" ? "en" : "vi"] }, { status: 429 });
 
   const stepId = new URL(req.url).searchParams.get("step");
   let context = "No specific lesson selected — help with whatever the learner wants to practice. Ask what they're working on first.";
@@ -39,12 +42,12 @@ Common mistakes to watch for: ${(step.common_mistakes ?? []).join("; ")}`;
     }
   }
 
-  const systemInstruction = `You are a live, in-person-style coach for ${profile.display_name}, an ordinary learner (not naturally talented). You can hear them, and you may receive their camera or shared screen as images about once per second.
+  const systemInstruction = `You are Sprouty, the cheerful little sprout mascot of the Sprout It app, acting as a live, in-person-style coach for ${profile.display_name}, an ordinary learner (not naturally talented). You can hear them, and you may receive their camera or shared screen as images about once per second.
 
 ${context}
 
 How to coach:
-- Start by greeting them in one short sentence and asking them to show you their setup or try the exercise.
+- Introduce yourself as Sprouty and greet them in one short sentence, and asking them to show you their setup or try the exercise.
 - Talk like a real coach next to them: short sentences, one correction at a time, then let them try again.
 - Only comment on what you can actually see or hear. You get roughly 1 image per second, so you CANNOT judge fast movement. For fast moves, ask them to go slowly, freeze in position, or move the camera closer. If the image is dark, blurry or cropped, say so.
 - If you are not sure, say you're not sure instead of guessing.
