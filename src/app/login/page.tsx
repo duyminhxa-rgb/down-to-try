@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 import Logo from "@/components/Logo";
 import Credit from "@/components/Credit";
 import AuthForm from "@/components/AuthForm";
@@ -12,6 +14,10 @@ const FEATURES: [IconName, string, string, string][] = [
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const { error } = await searchParams;
+  const {
+    data: { user },
+  } = await (await createClient()).auth.getUser();
+  if (user) redirect("/");
   const initialError = error ? "That link expired or was already used. Try again. / Link đã hết hạn, thử lại nhé." : undefined;
   return (
     <div className="grid min-h-dvh lg:grid-cols-[1.1fr_1fr]">
