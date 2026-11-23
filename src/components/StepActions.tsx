@@ -24,8 +24,12 @@ export default function StepActions({
 
   if (status === "done")
     return (
-      <div className="card flex flex-wrap items-center justify-between gap-3 !bg-mint/10">
-        <span className="text-xl font-bold text-mint">{labels.done} 🎉</span>
+      <div className="card flex flex-wrap items-center justify-between gap-3 !border-brand/30 !bg-brand-soft">
+        <span className="flex items-center gap-3 text-xl font-extrabold text-brand-dark">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/celebrate.webp" alt="" className="h-20 w-20 rounded-2xl" />
+          {labels.done} 🎉
+        </span>
         <div className="flex gap-2">
           <button className="btn-ghost" disabled={pending} onClick={() => start(() => setStepStatus(stepId, "todo"))}>
             {labels.undo}

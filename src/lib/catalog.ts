@@ -1,6 +1,7 @@
 export type Track = {
   id: string;
   icon: string;
+  image: string;
   color: string; // tailwind bg class for the tile
   name: { en: string; vi: string };
   skills: { en: string; vi: string }[];
@@ -10,8 +11,9 @@ export type Track = {
 export const TRACKS: Track[] = [
   {
     id: "music",
+    image: "/brand/tracks/music.webp",
     icon: "🎹",
-    color: "bg-[#ffe1d6]",
+    color: "bg-[#ddf6e8]",
     name: { en: "Music", vi: "Âm nhạc" },
     skills: [
       { en: "Piano", vi: "Piano" },
@@ -23,8 +25,9 @@ export const TRACKS: Track[] = [
   },
   {
     id: "language",
+    image: "/brand/tracks/language.webp",
     icon: "🗣️",
-    color: "bg-[#dff3ea]",
+    color: "bg-[#e3f0ff]",
     name: { en: "Languages", vi: "Ngoại ngữ" },
     skills: [
       { en: "Speaking English for daily life", vi: "Nói tiếng Anh giao tiếp hằng ngày" },
@@ -35,8 +38,9 @@ export const TRACKS: Track[] = [
   },
   {
     id: "art",
+    image: "/brand/tracks/art.webp",
     icon: "✏️",
-    color: "bg-[#e6e3ff]",
+    color: "bg-[#ece8ff]",
     name: { en: "Art & Design", vi: "Vẽ & Thiết kế" },
     skills: [
       { en: "Drawing faces", vi: "Vẽ chân dung" },
@@ -47,6 +51,7 @@ export const TRACKS: Track[] = [
   },
   {
     id: "body",
+    image: "/brand/tracks/body.webp",
     icon: "🧘",
     color: "bg-[#fff3c4]",
     name: { en: "Body & Movement", vi: "Vận động" },
@@ -59,8 +64,9 @@ export const TRACKS: Track[] = [
   },
   {
     id: "kitchen",
+    image: "/brand/tracks/kitchen.webp",
     icon: "🍜",
-    color: "bg-[#ffe7c2]",
+    color: "bg-[#ffe9d6]",
     name: { en: "Kitchen", vi: "Nấu ăn" },
     skills: [
       { en: "Knife skills", vi: "Kỹ năng dùng dao" },
@@ -71,6 +77,7 @@ export const TRACKS: Track[] = [
   },
   {
     id: "tech",
+    image: "/brand/tracks/tech.webp",
     icon: "💻",
     color: "bg-[#d9ecff]",
     name: { en: "Tech & Creative", vi: "Công nghệ" },

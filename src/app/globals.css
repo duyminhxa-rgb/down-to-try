@@ -2,14 +2,17 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand: #ff5a36;
-  --color-brand-dark: #e0431f;
-  --color-brand-soft: #ffe1d6;
-  --color-ink: #17152a;
-  --color-ink-2: #2a2742;
-  --color-cream: #fbf6ef;
-  --color-line: #ece4d8;
-  --color-mint: #12a37f;
+  --color-brand: #2fbf71;
+  --color-brand-dark: #23a05c;
+  --color-brand-soft: #ddf6e8;
+  --color-sky: #2d8cff;
+  --color-sky-soft: #e3f0ff;
+  --color-sun: #ffc531;
+  --color-ink: #12233d;
+  --color-ink-2: #1e3557;
+  --color-cream: #f6faf8;
+  --color-line: #e2eae6;
+  --color-mint: #2fbf71;
   --font-sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
 }
 
@@ -22,21 +25,21 @@ body {
 }
 
 .dot-grid {
-  background-image: radial-gradient(rgba(23, 21, 42, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(18, 35, 61, 0.08) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
 @utility btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold transition active:translate-y-px disabled:opacity-50 bg-brand text-white shadow-[0_3px_0_#c63a18] hover:bg-brand-dark;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold transition active:translate-y-px disabled:opacity-50 bg-brand text-white shadow-[0_4px_0_#1f9a58] hover:bg-brand-dark;
 }
 @utility btn-dark {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold transition active:translate-y-px disabled:opacity-50 bg-ink text-white shadow-[0_3px_0_#000] hover:bg-ink-2;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold transition active:translate-y-px disabled:opacity-50 bg-ink text-white shadow-[0_4px_0_#07111f] hover:bg-ink-2;
 }
 @utility btn-ghost {
   @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold transition active:translate-y-px disabled:opacity-50 bg-white text-ink border border-line hover:bg-cream;
 }
 @utility btn-mint {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold transition active:translate-y-px disabled:opacity-50 bg-mint text-white shadow-[0_3px_0_#0b7a5e] hover:brightness-95;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-bold transition active:translate-y-px disabled:opacity-50 bg-mint text-white shadow-[0_4px_0_#1f9a58] hover:brightness-95;
 }
 @utility card {
   @apply rounded-2xl bg-white p-5 border border-line;

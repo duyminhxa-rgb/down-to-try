@@ -34,41 +34,39 @@ export default function LoginPage() {
   return (
     <div className="grid min-h-dvh lg:grid-cols-[1.1fr_1fr]">
       {/* Left: brand panel */}
-      <section className="dot-grid relative hidden flex-col justify-between bg-ink p-12 text-white lg:flex [background-image:radial-gradient(rgba(255,255,255,0.07)_1px,transparent_1px)]">
-        <div className="flex items-center gap-3 text-xl font-extrabold">
-          <Logo size={36} /> Down <span className="-ml-2 text-brand">To Try</span>
-        </div>
-        <div>
-          <p className="eyebrow !text-white/50">Learning platform · Nền tảng học tập</p>
-          <h1 className="mt-4 text-6xl font-black leading-[1.02] tracking-tight">
+      <section className="relative hidden overflow-hidden bg-[#eef8f2] lg:flex lg:flex-col">
+        <div className="relative z-10 p-12">
+          <div className="flex items-center gap-3 text-xl font-extrabold">
+            <Logo size={40} /> Down <span className="-ml-2 text-brand">To Try</span>
+          </div>
+          <h1 className="mt-10 text-6xl font-black leading-[1.02] tracking-tight text-ink">
             Not talented?
             <br />
             <span className="text-brand">Perfect.</span>
           </h1>
-          <p className="mt-5 max-w-md text-lg text-white/70">
+          <p className="mt-5 max-w-sm text-lg text-ink/70">
             Learn piano, English, drawing, cooking — anything — one small step at a time, with a coach that can see and
             hear you.
           </p>
-          {/* Rising steps illustration */}
-          <div className="mt-10 flex items-end gap-3">
-            {[1, 2, 3, 4, 5].map((n) => (
-              <div
-                key={n}
-                className={`w-14 rounded-t-xl ${n === 5 ? "bg-brand" : "bg-white/10"}`}
-                style={{ height: 24 + n * 26 }}
-              />
-            ))}
-            <span className="mb-2 ml-2 text-4xl">🙌</span>
-          </div>
+          <p className="mt-2 max-w-sm text-ink/50">Học bất cứ thứ gì, từng bước nhỏ một.</p>
         </div>
-        <p className="text-sm text-white/40">For you and your whole family · Cho cả gia đình</p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/brand/hero.webp"
+          alt="Sprout climbing steps of piano, guitar, art, language, cooking and tech"
+          className="mt-auto w-full object-cover object-bottom"
+        />
       </section>
 
       {/* Right: sign in */}
       <section className="flex flex-col justify-center px-6 py-12 sm:px-12">
         <div className="mx-auto w-full max-w-md">
-          <div className="mb-8 flex items-center gap-2 text-xl font-extrabold lg:hidden">
-            <Logo size={32} /> Down <span className="-ml-1 text-brand">To Try</span>
+          <div className="mb-6 lg:hidden">
+            <div className="flex items-center gap-2 text-xl font-extrabold">
+              <Logo size={36} /> Down <span className="-ml-1 text-brand">To Try</span>
+            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/hero.webp" alt="" className="mt-4 w-full rounded-2xl" />
           </div>
           <h2 className="text-4xl font-black tracking-tight">{sent ? "Check your email 📬" : "Welcome in"}</h2>
           <p className="mt-2 text-ink/60">

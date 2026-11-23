@@ -26,7 +26,8 @@ export default async function SkillsPage() {
       </div>
       {list.length === 0 ? (
         <div className="card text-center">
-          <p className="text-5xl">🪜</p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/hero.webp" alt="" className="mx-auto mb-4 w-full max-w-md rounded-2xl" />
           <p className="mt-2 font-bold">{en ? "Nothing here yet." : "Chưa có gì."}</p>
           <p className="text-ink/60">{en ? "Pick something you're down to try." : "Chọn một thứ bạn muốn thử nhé."}</p>
         </div>

@@ -73,16 +73,17 @@ export default async function Home() {
       {active && nextStep && (
         <Link
           href={`/step/${nextStep.id}`}
-          className="group relative block overflow-hidden rounded-3xl bg-ink p-6 text-white sm:p-8"
+          className="group relative block overflow-hidden rounded-3xl bg-brand p-6 text-white shadow-[0_6px_0_#1f9a58] sm:p-8"
         >
-          <div className="pointer-events-none absolute -right-6 bottom-0 flex items-end gap-2 opacity-30">
-            {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="w-10 rounded-t-lg bg-brand" style={{ height: 20 + n * 22 }} />
-            ))}
-          </div>
-          <p className="eyebrow !text-white/50">{en ? "Continue learning" : "Học tiếp"} · {titleCase(active.name)}</p>
-          <p className="mt-2 max-w-xl text-2xl font-extrabold leading-snug sm:text-3xl">{titleCase(nextStep.title)}</p>
-          <span className="btn-primary mt-5">{en ? "Practice now →" : "Luyện ngay →"}</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/app-icon.png"
+            alt=""
+            className="pointer-events-none absolute -bottom-6 -right-6 w-40 rotate-6 opacity-90 sm:w-48"
+          />
+          <p className="eyebrow !text-white/80">{en ? "Continue learning" : "Học tiếp"} · {titleCase(active.name)}</p>
+          <p className="mt-2 max-w-xl text-2xl font-extrabold leading-snug sm:text-3xl max-w-md">{titleCase(nextStep.title)}</p>
+          <span className="mt-5 inline-flex items-center rounded-xl bg-white px-5 py-3 font-bold text-brand-dark shadow-[0_4px_0_rgba(0,0,0,0.15)]">{en ? "Practice now →" : "Luyện ngay →"}</span>
         </Link>
       )}
 

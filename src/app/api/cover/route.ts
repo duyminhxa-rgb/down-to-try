@@ -10,8 +10,8 @@ const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-nano-banana-2.1";
 function prompt(skill: string) {
   return `A warm, friendly editorial illustration for a learning app, about learning: "${skill}".
 Show the key object or activity of this skill in a hopeful "first steps" moment — like a beginner's tools laid out and ready, or hands mid-practice.
-Style: modern flat illustration with soft paper grain and gentle shadows, rounded shapes, lots of breathing room, simple background.
-Colour palette only: warm cream (#fbf6ef), coral orange (#ff5a36), deep navy (#17152a), mint green (#12a37f), soft butter yellow (#ffd766).
+Style: clean modern flat vector illustration like a premium mobile learning app, soft subtle shading, rounded friendly shapes, lots of breathing room, simple background.
+Colour palette only: soft off-white (#F6FAF8), fresh green (#2FBF71), light green (#7BE0A6), sky blue (#2D8CFF), sunny yellow (#FFC531), deep navy (#12233D).
 Strictly no text, no letters, no numbers, no logos, no brand names, no watermarks. No recognizable real people.`;
 }
 

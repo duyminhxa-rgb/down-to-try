@@ -21,11 +21,14 @@ export default function NewSkillForm({ lang }: { lang: string }) {
             type="button"
             key={t.id}
             onClick={() => setTrack(t.id)}
-            className={`flex flex-col items-center gap-1 rounded-2xl border-2 p-3 text-sm font-bold transition ${t.color} ${
-              track === t.id ? "border-ink" : "border-transparent opacity-80 hover:opacity-100"
+            className={`flex flex-col items-center gap-1 rounded-2xl border-2 bg-white p-2 pb-3 text-sm font-bold transition ${
+              track === t.id
+                ? "border-brand shadow-[0_4px_0_#2fbf71] -translate-y-0.5"
+                : "border-line shadow-[0_4px_0_#e2eae6] hover:border-brand/50"
             }`}
           >
-            <span className="text-3xl">{t.icon}</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={t.image} alt="" className="h-16 w-16" />
             {t.name[l]}
           </button>
         ))}
@@ -41,7 +44,7 @@ export default function NewSkillForm({ lang }: { lang: string }) {
               key={s.en}
               onClick={() => setSkill(s[l])}
               className={`rounded-full border px-4 py-2 text-[15px] font-semibold transition ${
-                skill === s[l] ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink"
+                skill === s[l] ? "border-brand bg-brand text-white" : "border-line bg-white hover:border-brand"
               }`}
             >
               {s[l]}
@@ -75,7 +78,7 @@ export default function NewSkillForm({ lang }: { lang: string }) {
           ].map(([v, label], i) => (
             <label key={v} className="cursor-pointer">
               <input type="radio" name="level" value={v} defaultChecked={i === 0} className="peer sr-only" />
-              <span className="inline-block rounded-full border border-line bg-white px-3 py-1.5 text-sm font-semibold peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white">
+              <span className="inline-block rounded-full border border-line bg-white px-3 py-1.5 text-sm font-semibold peer-checked:border-sky peer-checked:bg-sky peer-checked:text-white">
                 {label}
               </span>
             </label>
