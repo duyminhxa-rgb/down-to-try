@@ -2,18 +2,11 @@ import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { getUserAndProfile } from "@/lib/supabase/server";
 import { geminiKey } from "@/lib/keys";
+import { coverPrompt } from "@/lib/art";
 
 export const maxDuration = 120;
 
 const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-nano-banana-2.1";
-
-function prompt(skill: string) {
-  return `A warm, friendly editorial illustration for a learning app, about learning: "${skill}".
-Show the key object or activity of this skill in a hopeful "first steps" moment — like a beginner's tools laid out and ready, or hands mid-practice.
-Style: clean modern flat vector illustration like a premium mobile learning app, soft subtle shading, rounded friendly shapes, lots of breathing room, simple background.
-Colour palette only: soft off-white (#F6FAF8), fresh green (#2FBF71), light green (#7BE0A6), sky blue (#2D8CFF), sunny yellow (#FFC531), deep navy (#12233D).
-Strictly no text, no letters, no numbers, no logos, no brand names, no watermarks. No recognizable real people.`;
-}
 
 /** Generates (once) an AI cover illustration for a skill and stores it in Supabase Storage. */
 export async function POST(req: Request) {
@@ -30,7 +23,7 @@ export async function POST(req: Request) {
     const ai = new GoogleGenAI({ apiKey: geminiKey() });
     const interaction = await ai.interactions.create({
       model: IMAGE_MODEL,
-      input: prompt(skill.name),
+      input: coverPrompt(skill.name),
       response_format: { type: "image", aspect_ratio: "16:9", image_size: "1K" },
     });
     const img = interaction.output_image;

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { makeStepSmaller, setStepStatus } from "@/app/actions";
 import Sprout, { SproutLoader } from "./Sprout";
+import { sfx } from "@/lib/sfx";
 
 type Labels = Record<"done" | "stuck" | "undo" | "next" | "thinking" | "stuckQuestion", string>;
 
@@ -50,7 +51,11 @@ export default function StepActions({
         <button
           className="btn-mint text-lg"
           disabled={pending}
-          onClick={() => start(() => setStepStatus(stepId, "done"))}
+          onClick={() => {
+            if (nextId) sfx.done();
+            else sfx.bloom();
+            start(() => setStepStatus(stepId, "done"));
+          }}
         >
           {labels.done}
         </button>
@@ -73,6 +78,7 @@ export default function StepActions({
               start(async () => {
                 const res = await makeStepSmaller(stepId, note);
                 if (res?.error) setError(res.error);
+                else sfx.split();
               })
             }
           >

@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getUserAndProfile } from "@/lib/supabase/server";
 import { signOut, updateProfile } from "@/app/actions";
 import { t } from "@/lib/i18n";
+import SoundToggle from "@/components/SoundToggle";
 
 export default async function SettingsPage() {
   const { supabase, user, profile } = await getUserAndProfile();
@@ -46,6 +47,12 @@ export default async function SettingsPage() {
         </fieldset>
         <button className="btn-primary w-full">{lang === "en" ? "Save" : "Lưu"}</button>
       </form>
+      <div className="card space-y-3">
+        <SoundToggle
+          label={lang === "en" ? "Sound Effects" : "Hiệu Ứng Âm Thanh"}
+          hint={lang === "en" ? "Little dings when you finish a step." : "Tiếng “ting” nhỏ khi bạn xong một bước."}
+        />
+      </div>
 
       <div className="card">
         <p className="font-semibold">{lang === "en" ? "AI Cost This Month (Approx.)" : "Chi Phí AI Tháng Này (Ước Tính)"}</p>

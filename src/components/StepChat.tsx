@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Icon from "./Icon";
 import Sprout from "./Sprout";
+import { sfx } from "@/lib/sfx";
 
 type Msg = { id?: string; role: "user" | "assistant"; content: string };
 
@@ -26,6 +27,7 @@ export default function StepChat({
     if (!q || loading) return;
     setText("");
     setMessages((m) => [...m, { role: "user", content: q }]);
+    sfx.pop();
     setLoading(true);
     try {
       const res = await fetch("/api/chat", {
@@ -35,6 +37,7 @@ export default function StepChat({
       });
       const json = await res.json();
       setMessages((m) => [...m, { role: "assistant", content: json.reply ?? json.error ?? "Error" }]);
+      if (json.reply) sfx.reply();
     } catch {
       setMessages((m) => [...m, { role: "assistant", content: "Network error — try again." }]);
     } finally {

@@ -9,6 +9,24 @@ import { findVideos } from "@/lib/youtube";
 import { titleCase } from "@/lib/text";
 import Sprout from "@/components/Sprout";
 import Icon from "@/components/Icon";
+import StepImage from "@/components/StepImage";
+
+/** Break a paragraph into short, scannable lines (one or two sentences each). */
+function toLines(text: string | null): string[] {
+  if (!text) return [];
+  const parts = text
+    .replace(/\s+/g, " ")
+    .split(/(?<=[.!?])\s+(?=[A-ZÀ-Ỹ0-9"'“])/u)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  const out: string[] = [];
+  for (const p of parts) {
+    const last = out[out.length - 1];
+    if (last && (last.length < 45 || p.length < 30) && out.length >= 1 && last.length + p.length < 140) out[out.length - 1] = `${last} ${p}`;
+    else out.push(p);
+  }
+  return out.slice(0, 8);
+}
 
 export const maxDuration = 300;
 
@@ -64,42 +82,78 @@ export default async function StepPage({ params }: { params: Promise<{ id: strin
           </p>
         )}
         <p className="text-sm font-semibold uppercase tracking-wide text-brand">{titleCase(step.level_name)}</p>
-        <h1 className="text-3xl font-extrabold leading-tight">{titleCase(step.title)}</h1>
+        <h1 className="text-[28px] font-black leading-tight sm:text-3xl">{titleCase(step.title)}</h1>
       </div>
 
       {videos && videos.length > 0 && <VideoPicker videos={videos} label={t(lang, "moreVideos")} />}
 
-      <section className="card space-y-4">
-        <p className="text-lg leading-relaxed">{step.explanation}</p>
-        {step.why_it_matters && (
-          <div>
-            <h3 className="flex items-center gap-2 font-bold"><Icon name="why" size={26} /> {t(lang, "why")}</h3>
-            <p className="text-ink/80">{step.why_it_matters}</p>
-          </div>
-        )}
-        {step.practice && (
-          <div className="rounded-2xl bg-cream p-4">
-            <h3 className="flex items-center gap-2 font-bold"><Icon name="practice" size={26} /> {t(lang, "practice")}</h3>
-            <p>{step.practice}</p>
-          </div>
-        )}
-        {step.done_looks_like && (
-          <div>
-            <h3 className="flex items-center gap-2 font-bold"><Icon name="target" size={26} /> {t(lang, "doneLooks")}</h3>
-            <p className="text-ink/80">{step.done_looks_like}</p>
-          </div>
-        )}
-        {step.common_mistakes?.length > 0 && (
-          <div>
-            <h3 className="flex items-center gap-2 font-bold"><Icon name="warning" size={26} /> {t(lang, "mistakes")}</h3>
-            <ul className="list-disc space-y-1 pl-6 text-ink/80">
-              {step.common_mistakes.map((m: string) => (
-                <li key={m}>{m}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+      <section className="card space-y-5 !p-4 sm:!p-6">
+        <StepImage
+          stepId={step.id}
+          imageUrl={step.image_url ?? null}
+          alt={titleCase(step.title)}
+          drawing={lang === "en" ? "Sprouty is drawing this step…" : "Sprouty đang vẽ bước này…"}
+        />
+        <div>
+          <h2 className="mb-3 text-xl font-extrabold">{lang === "en" ? "How To Do It" : "Cách Làm"}</h2>
+          <ol className="space-y-3">
+            {toLines(step.explanation).map((line, i) => (
+              <li key={i} className="flex gap-3">
+                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-black text-white">
+                  {i + 1}
+                </span>
+                <span className="text-[16px] leading-[1.6] text-ink/90 sm:text-[17px]">{line}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </section>
+
+      {step.practice && (
+        <section className="rounded-2xl border-2 border-brand/25 bg-brand-soft p-4 sm:p-6">
+          <h3 className="mb-2 flex items-center gap-2 text-lg font-extrabold text-brand-dark">
+            <Icon name="practice" size={30} /> {t(lang, "practice")}
+          </h3>
+          <p className="text-[16px] leading-[1.6] text-ink sm:text-[17px]">{step.practice}</p>
+        </section>
+      )}
+
+      {step.done_looks_like && (
+        <section className="rounded-2xl border-2 border-sky/20 bg-sky-soft p-4 sm:p-6">
+          <h3 className="mb-2 flex items-center gap-2 text-lg font-extrabold text-[#1a5fb4]">
+            <Icon name="target" size={30} /> {t(lang, "doneLooks")}
+          </h3>
+          <p className="text-[16px] leading-[1.6] text-ink sm:text-[17px]">{step.done_looks_like}</p>
+        </section>
+      )}
+
+      {step.common_mistakes?.length > 0 && (
+        <section className="rounded-2xl border-2 border-sun/40 bg-[#fff8e1] p-4 sm:p-6">
+          <h3 className="mb-3 flex items-center gap-2 text-lg font-extrabold text-[#8a6100]">
+            <Icon name="warning" size={30} /> {t(lang, "mistakes")}
+          </h3>
+          <ul className="space-y-2.5">
+            {step.common_mistakes.map((m: string) => (
+              <li key={m} className="flex gap-3 text-[16px] leading-[1.55] text-ink sm:text-[17px]">
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-sun/60 text-xs font-black text-[#8a6100]">
+                  ✕
+                </span>
+                {m}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {step.why_it_matters && (
+        <section className="flex gap-3 px-1">
+          <Icon name="why" size={30} className="mt-0.5" />
+          <div>
+            <h3 className="text-base font-extrabold">{t(lang, "why")}</h3>
+            <p className="text-[15px] leading-[1.6] text-ink/75 sm:text-base">{step.why_it_matters}</p>
+          </div>
+        </section>
+      )}
 
       <Link
         href={`/coach?step=${step.id}`}
