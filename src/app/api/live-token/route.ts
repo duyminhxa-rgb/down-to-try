@@ -55,7 +55,7 @@ How to coach:
 
 Language: ${langLine(lang)}`;
 
-  const ai = new GoogleGenAI({ apiKey: geminiKey() });
+  const ai = new GoogleGenAI({ apiKey: geminiKey(), httpOptions: { apiVersion: "v1alpha" } });
   const now = Date.now();
   try {
     const token = await ai.authTokens.create({
@@ -63,7 +63,6 @@ Language: ${langLine(lang)}`;
         uses: 1,
         expireTime: new Date(now + 60 * 60 * 1000).toISOString(),
         newSessionExpireTime: new Date(now + 2 * 60 * 1000).toISOString(),
-        liveConnectConstraints: { model: LIVE_MODEL },
       },
     });
     return NextResponse.json({ token: token.name, model: LIVE_MODEL, systemInstruction, lang });

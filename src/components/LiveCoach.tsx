@@ -227,7 +227,7 @@ export default function LiveCoach({ stepId, lang }: { stepId: string | null; lan
     const cfg = await res.json();
     if (!res.ok) throw new Error(cfg.error || "Couldn't start the coach");
 
-    const ai = new GoogleGenAI({ apiKey: cfg.token });
+    const ai = new GoogleGenAI({ apiKey: cfg.token, httpOptions: { apiVersion: "v1alpha" } });
     const session = await ai.live.connect({
       model: cfg.model,
       config: {
